@@ -29,10 +29,16 @@ root
 
 cqlStatement
     : createTable
+    | createKeyspace
     ;
 
 createTable
    : K_CREATE K_TABLE ifNotExist? tableName L_PAREN columnDefinitionList R_PAREN wihtTableOptions?
+   ;
+
+// TODO: Consider using a more precise syntax for options.
+createKeyspace
+   : K_CREATE K_KEYSPACE ifNotExist? keyspaceName K_WITH nonSemicolonToken*
    ;
 
 columnDefinitionList
@@ -138,6 +144,7 @@ nonSemicolonToken
     | K_PRIMARY
     | K_KEY
     | K_WITH
+    | K_KEYSPACE
     | K_ASCII
     | K_BIGINT
     | K_BLOB

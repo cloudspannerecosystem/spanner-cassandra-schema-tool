@@ -20,17 +20,18 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestToSpannerCreate(t *testing.T) {
+func TestToSpannerStmt(t *testing.T) {
 	tests := []struct {
 		name                string
 		cqlStmt             string
 		expectedSpannerStmt string
+		expectedIgnored     bool
 		expectError         bool
 		expectedErrorMsg    string
 	}{
 		// Format the struct.
 		{
-			name: "Only Text type",
+			name: "CREATE TABLE only Text type",
 			cqlStmt: `CREATE TABLE ks.t_test (
 							pk_text  TEXT PRIMARY KEY,
 							col_text text
@@ -39,11 +40,12 @@ func TestToSpannerCreate(t *testing.T) {
 				" pk_text STRING(MAX) NOT NULL OPTIONS (cassandra_type = 'text'),\n" +
 				" col_text STRING(MAX) OPTIONS (cassandra_type = 'text'),\n" +
 				") PRIMARY KEY (pk_text)",
+			expectedIgnored:  false,
 			expectError:      false,
 			expectedErrorMsg: "",
 		},
 		{
-			name: "Has IF NOT EXISTS",
+			name: "CREATE TABLE has IF NOT EXISTS",
 			cqlStmt: `CREATE TABLE IF NOT EXISTS ks.t_test (
 									pk_text  TEXT PRIMARY KEY,
 									col_text text
@@ -52,11 +54,12 @@ func TestToSpannerCreate(t *testing.T) {
 				" pk_text STRING(MAX) NOT NULL OPTIONS (cassandra_type = 'text'),\n" +
 				" col_text STRING(MAX) OPTIONS (cassandra_type = 'text'),\n" +
 				") PRIMARY KEY (pk_text)",
+			expectedIgnored:  false,
 			expectError:      false,
 			expectedErrorMsg: "",
 		},
 		{
-			name: "Has primary key clause with partition key",
+			name: "CREATE TABLE has pk clause with partition key",
 			cqlStmt: `CREATE TABLE ks.t_test (
 									col_1 TEXT ,
 									col_2 TEXT,
@@ -70,11 +73,12 @@ func TestToSpannerCreate(t *testing.T) {
 				" col_3 STRING(MAX) OPTIONS (cassandra_type = 'text'),\n" +
 				" col_4 STRING(MAX) OPTIONS (cassandra_type = 'text'),\n" +
 				") PRIMARY KEY (col_1)",
+			expectedIgnored:  false,
 			expectError:      false,
 			expectedErrorMsg: "",
 		},
 		{
-			name: "Has primary key clause with partition key and clustering key",
+			name: "CREATE TABLE has pk clause with partition key and clustering key",
 			cqlStmt: `CREATE TABLE ks.t_test (
 									col_1 TEXT ,
 									col_2 TEXT,
@@ -88,11 +92,12 @@ func TestToSpannerCreate(t *testing.T) {
 				" col_3 STRING(MAX) NOT NULL OPTIONS (cassandra_type = 'text'),\n" +
 				" col_4 STRING(MAX) OPTIONS (cassandra_type = 'text'),\n" +
 				") PRIMARY KEY (col_1, col_2, col_3)",
+			expectedIgnored:  false,
 			expectError:      false,
 			expectedErrorMsg: "",
 		},
 		{
-			name: "Has primary key clause with composite partition key and clustering key",
+			name: "CREATE TABLE has pk clause with composite partition key and clustering key",
 			cqlStmt: `CREATE TABLE ks.t_test (
 									col_1 TEXT ,
 									col_2 TEXT,
@@ -106,11 +111,12 @@ func TestToSpannerCreate(t *testing.T) {
 				" col_3 STRING(MAX) NOT NULL OPTIONS (cassandra_type = 'text'),\n" +
 				" col_4 STRING(MAX) NOT NULL OPTIONS (cassandra_type = 'text'),\n" +
 				") PRIMARY KEY (col_1, col_2, col_3, col_4)",
+			expectedIgnored:  false,
 			expectError:      false,
 			expectedErrorMsg: "",
 		},
 		{
-			name: "Table Options are ignored",
+			name: "CREATE TABLE table Options are ignored",
 			cqlStmt: `CREATE TABLE ks.t_test (
 							pk_text  TEXT PRIMARY KEY,
 							col_text text
@@ -121,11 +127,12 @@ func TestToSpannerCreate(t *testing.T) {
 				" pk_text STRING(MAX) NOT NULL OPTIONS (cassandra_type = 'text'),\n" +
 				" col_text STRING(MAX) OPTIONS (cassandra_type = 'text'),\n" +
 				") PRIMARY KEY (pk_text)",
+			expectedIgnored:  false,
 			expectError:      false,
 			expectedErrorMsg: "",
 		},
 		{
-			name: "All NativeType without counter",
+			name: "CREATE TABLE all native type without counter",
 			cqlStmt: `CREATE TABLE ks.t_all_native (
 									pk_text  		TEXT 		PRIMARY KEY,
 									col_ascii 		ASCII,
@@ -170,11 +177,12 @@ func TestToSpannerCreate(t *testing.T) {
 				" col_varchar STRING(MAX) OPTIONS (cassandra_type = 'varchar'),\n" +
 				" col_varint NUMERIC OPTIONS (cassandra_type = 'varint'),\n" +
 				") PRIMARY KEY (pk_text)",
+			expectedIgnored:  false,
 			expectError:      false,
 			expectedErrorMsg: "",
 		},
 		{
-			name: "Counter table",
+			name: "CREATE TABLE counter table",
 			cqlStmt: `CREATE TABLE ks.t_counter (
 						pk_text	TEXT 	PRIMARY KEY,
 						c1		Counter,
@@ -185,11 +193,12 @@ func TestToSpannerCreate(t *testing.T) {
 				" c1 INT64 NOT NULL OPTIONS (cassandra_type = 'counter'),\n" +
 				" c2 INT64 NOT NULL OPTIONS (cassandra_type = 'counter'),\n" +
 				") PRIMARY KEY (pk_text)",
+			expectedIgnored:  false,
 			expectError:      false,
 			expectedErrorMsg: "",
 		},
 		{
-			name: "LIST with all native types excluding counter",
+			name: "CREATE TABLE list with all native types excluding counter",
 			cqlStmt: `CREATE TABLE ks.t_list (
 									pk_text 			TEXT 			PRIMARY KEY,
 									col_list_ascii 		LIST<ASCII>,
@@ -234,11 +243,12 @@ func TestToSpannerCreate(t *testing.T) {
 				" col_list_varchar ARRAY<STRING(MAX)> OPTIONS (cassandra_type = 'list<varchar>'),\n" +
 				" col_list_varint ARRAY<NUMERIC> OPTIONS (cassandra_type = 'list<varint>'),\n" +
 				") PRIMARY KEY (pk_text)",
+			expectedIgnored:  false,
 			expectError:      false,
 			expectedErrorMsg: "",
 		},
 		{
-			name: "SET with all native types excluding counter",
+			name: "CREATE TABLE  set with all native types excluding counter",
 			cqlStmt: `CREATE TABLE ks.t_set (
 									pk_text 			TEXT 			PRIMARY KEY,
 									col_set_ascii 		SET<ASCII>,
@@ -283,11 +293,12 @@ func TestToSpannerCreate(t *testing.T) {
 				" col_set_varchar ARRAY<STRING(MAX)> OPTIONS (cassandra_type = 'set<varchar>'),\n" +
 				" col_set_varint ARRAY<NUMERIC> OPTIONS (cassandra_type = 'set<varint>'),\n" +
 				") PRIMARY KEY (pk_text)",
+			expectedIgnored:  false,
 			expectError:      false,
 			expectedErrorMsg: "",
 		},
 		{
-			name: "MAP with all native types as the key excluding counter",
+			name: "CREATE TABLE  map with all native types as the key excluding counter",
 			cqlStmt: `CREATE TABLE ks.t_map_key (
 									pk_text 				TEXT 				PRIMARY KEY,
 									col_map_key_ascii 		MAP<ASCII,TEXT>,
@@ -332,11 +343,12 @@ func TestToSpannerCreate(t *testing.T) {
 				" col_map_key_varchar JSON OPTIONS (cassandra_type = 'map<varchar,text>'),\n" +
 				" col_map_key_varint JSON OPTIONS (cassandra_type = 'map<varint,text>'),\n" +
 				") PRIMARY KEY (pk_text)",
+			expectedIgnored:  false,
 			expectError:      false,
 			expectedErrorMsg: "",
 		},
 		{
-			name: "MAP with all native types as the value excluding counter",
+			name: "CREATE TABLE map with all native types as the value excluding counter",
 			cqlStmt: `CREATE TABLE ks.t_map_value (
 									pk_text 				TEXT 				PRIMARY KEY,
 									col_map_value_ascii 	MAP<INT,ASCII>,
@@ -381,329 +393,361 @@ func TestToSpannerCreate(t *testing.T) {
 				" col_map_value_varchar JSON OPTIONS (cassandra_type = 'map<int,varchar>'),\n" +
 				" col_map_value_varint JSON OPTIONS (cassandra_type = 'map<int,varint>'),\n" +
 				") PRIMARY KEY (pk_text)",
+			expectedIgnored:  false,
 			expectError:      false,
 			expectedErrorMsg: "",
 		},
 		{
-			name: "Non counter column in counter table error",
+			name: "CREATE TABLE non counter column in counter table error",
 			cqlStmt: `CREATE TABLE ks.t_test (
 						pk 			text	Primary key,
 						non_pk1 	text,
 						non_pk2 	counter
 					)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "Cannot mix counter and non counter columns in the same table",
 		},
 		// Testcases for invalid number of pk.
 		{
-			name: "Has both table and column primary key error",
+			name: "CREATE TABLE has both table and column primary key error",
 			cqlStmt: `CREATE TABLE ks.t_test (
 						pk 		text	Primary key,
 						non_pk 	text,
 						primary key (pk)
 					)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "Multiple PRIMARY KEY specified for table 't_test' (exactly one required)",
 		},
 		{
-			name: "Has multiple column primary key error",
+			name: "CREATE TABLE has multiple column primary key error",
 			cqlStmt: `CREATE TABLE ks.t_test (
 						pk 		text 	Primary key,
 						non_pk 	text	Primary key
 					)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "Multiple PRIMARY KEY specified for table 't_test' (exactly one required)",
 		},
 		{
-			name: "No primary key error",
+			name: "CREATE TABLE no primary key error",
 			cqlStmt: `CREATE TABLE ks.t_no_pk (
 						col1 	list<int>,
 						col2 	TEXT
 					)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "No PRIMARY KEY specified for table 't_no_pk' (exactly one required)",
 		},
 		// Testcases for invalud/unsupported cql data type.
 		{
-			name: "Invalid Cql JSON type error",
+			name: "CREATE TABLE Invalid Cql JSON type error",
 			cqlStmt: `CREATE TABLE ks.t_test (
 									pk 		text 	Primary key,
 									non_pk 	JSON
 								)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "SyntaxException: mismatched input 'JSON' expecting {'ASCII', 'BIGINT', 'BLOB', 'BOOLEAN', 'COUNTER', 'DATE', 'DECIMAL', 'DOUBLE', 'FLOAT', 'INET', 'INT', 'SMALLINT', 'TEXT', 'TIME', 'TIMESTAMP', 'TIMEUUID', 'TINYINT', 'UUID', 'VARCHAR', 'VARINT', 'MAP', 'SET', 'LIST'} at line 3, column 17",
 		},
 		{
-			name: "Invalid Cql INT64 type error",
+			name: "CREATE TABLE invalid Cql INT64 type error",
 			cqlStmt: `CREATE TABLE ks.t_test (
 									pk 		text 	Primary key,
 									non_pk 	INT64
 								)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "SyntaxException: mismatched input 'INT64' expecting {'ASCII', 'BIGINT', 'BLOB', 'BOOLEAN', 'COUNTER', 'DATE', 'DECIMAL', 'DOUBLE', 'FLOAT', 'INET', 'INT', 'SMALLINT', 'TEXT', 'TIME', 'TIMESTAMP', 'TIMEUUID', 'TINYINT', 'UUID', 'VARCHAR', 'VARINT', 'MAP', 'SET', 'LIST'} at line 3, column 17",
 		},
 		{
-			name: "Unsupported Cql duration type error",
+			name: "CREATE TABLE unsupported Cql duration type error",
 			cqlStmt: `CREATE TABLE ks.t_test (
 									pk 		text 		Primary key,
 									non_pk 	Duration
 								)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "SyntaxException: mismatched input 'Duration' expecting {'ASCII', 'BIGINT', 'BLOB', 'BOOLEAN', 'COUNTER', 'DATE', 'DECIMAL', 'DOUBLE', 'FLOAT', 'INET', 'INT', 'SMALLINT', 'TEXT', 'TIME', 'TIMESTAMP', 'TIMEUUID', 'TINYINT', 'UUID', 'VARCHAR', 'VARINT', 'MAP', 'SET', 'LIST'} at line 3, column 17",
 		},
 		{
-			name: "Unsupported Cql tuple type error",
+			name: "CREATE TABLE unsupported Cql tuple type error",
 			cqlStmt: `CREATE TABLE ks.t_test (
 									pk 		text 		Primary key,
 									non_pk 	tuple<text>
 								)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "SyntaxException: mismatched input 'tuple' expecting {'ASCII', 'BIGINT', 'BLOB', 'BOOLEAN', 'COUNTER', 'DATE', 'DECIMAL', 'DOUBLE', 'FLOAT', 'INET', 'INT', 'SMALLINT', 'TEXT', 'TIME', 'TIMESTAMP', 'TIMEUUID', 'TINYINT', 'UUID', 'VARCHAR', 'VARINT', 'MAP', 'SET', 'LIST'} at line 3, column 17",
 		},
 		{
-			name: "Unsupported Cql frozn type error",
+			name: "CREATE TABLE unsupported Cql frozn type error",
 			cqlStmt: `CREATE TABLE ks.t_test (
 									pk 		text 				Primary key,
 									non_pk 	frozen<set<int>>
 								)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "SyntaxException: mismatched input 'frozen' expecting {'ASCII', 'BIGINT', 'BLOB', 'BOOLEAN', 'COUNTER', 'DATE', 'DECIMAL', 'DOUBLE', 'FLOAT', 'INET', 'INT', 'SMALLINT', 'TEXT', 'TIME', 'TIMESTAMP', 'TIMEUUID', 'TINYINT', 'UUID', 'VARCHAR', 'VARINT', 'MAP', 'SET', 'LIST'} at line 3, column 17",
 		},
 		// Testcases for using counter as the type param of collection types.
 		{
-			name: "List of Counter error",
+			name: "CREATE TABLE list of counter error",
 			cqlStmt: `CREATE TABLE ks.t_test (
 									pk 		text 			Primary key,
 									non_pk 	list<counter>
 								)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "Counters are not allowed inside collections: list<counter>",
 		},
 		{
-			name: "SET of Counter error",
+			name: "CREATE TABLE set of counter error",
 			cqlStmt: `CREATE TABLE ks.t_test (
 									pk 		text 			Primary key,
 									non_pk 	SET<counter>
 								)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "Counters are not allowed inside collections: SET<counter>",
 		},
 		{
-			name: "Counter as Map key error",
+			name: "CREATE TABLE counter as map key error",
 			cqlStmt: `CREATE TABLE ks.t_test (
 									pk 		text 				Primary key,
 									non_pk 	MAP<counter,int>
 								)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "Counters are not allowed inside collections: MAP<counter,int>",
 		},
 		{
-			name: "Counter as Map value error",
+			name: "CREATE TABLE counter as map value error",
 			cqlStmt: `CREATE TABLE ks.t_test (
 									pk 		text 				Primary key,
 									non_pk 	MAP<text,counter>
 								)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "Counters are not allowed inside collections: MAP<text,counter>",
 		},
 		// Testcases for nested collection.
 		{
-			name: "A list with a neseted set error",
+			name: "CREATE TABLE a list with a neseted set error",
 			cqlStmt: `CREATE TABLE ks.t_test (
 									pk 		text 				Primary key,
 									non_pk 	list<set<int>>
 								)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "SyntaxException: mismatched input 'set' expecting {'ASCII', 'BIGINT', 'BLOB', 'BOOLEAN', 'COUNTER', 'DATE', 'DECIMAL', 'DOUBLE', 'FLOAT', 'INET', 'INT', 'SMALLINT', 'TEXT', 'TIME', 'TIMESTAMP', 'TIMEUUID', 'TINYINT', 'UUID', 'VARCHAR', 'VARINT'} at line 3, column 22",
 		},
 		{
-			name: "A set with a neseted list error",
+			name: "CREATE TABLE a set with a neseted list error",
 			cqlStmt: `CREATE TABLE ks.t_test (
 									pk 		text 				Primary key,
 									non_pk 	set<list<int>>
 								)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "SyntaxException: mismatched input 'list' expecting {'ASCII', 'BIGINT', 'BLOB', 'BOOLEAN', 'COUNTER', 'DATE', 'DECIMAL', 'DOUBLE', 'FLOAT', 'INET', 'INT', 'SMALLINT', 'TEXT', 'TIME', 'TIMESTAMP', 'TIMEUUID', 'TINYINT', 'UUID', 'VARCHAR', 'VARINT'} at line 3, column 21",
 		},
 		{
-			name: "A map with a neseted list error",
+			name: "CREATE TABLE a map with a neseted list error",
 			cqlStmt: `CREATE TABLE ks.t_test (
 									pk 		text 				Primary key,
 									non_pk 	map<list<int>,text>
 								)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "SyntaxException: mismatched input 'list' expecting {'ASCII', 'BIGINT', 'BLOB', 'BOOLEAN', 'COUNTER', 'DATE', 'DECIMAL', 'DOUBLE', 'FLOAT', 'INET', 'INT', 'SMALLINT', 'TEXT', 'TIME', 'TIMESTAMP', 'TIMEUUID', 'TINYINT', 'UUID', 'VARCHAR', 'VARINT'} at line 3, column 21",
 		},
 		{
-			name: "A set with a nested frozen type is unsupported",
+			name: "CREATE TABLE a set with a nested frozen type is unsupported",
 			cqlStmt: `CREATE TABLE ks.t_test (
 									pk 		text 				Primary key,
 									non_pk 	set<frozen <set<int>>>
 								)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "SyntaxException: mismatched input 'frozen' expecting {'ASCII', 'BIGINT', 'BLOB', 'BOOLEAN', 'COUNTER', 'DATE', 'DECIMAL', 'DOUBLE', 'FLOAT', 'INET', 'INT', 'SMALLINT', 'TEXT', 'TIME', 'TIMESTAMP', 'TIMEUUID', 'TINYINT', 'UUID', 'VARCHAR', 'VARINT'} at line 3, column 21",
 		},
 
 		// Testcases for wrong number of type params of collection types.
 		{
-			name: "LIST too many type params error",
+			name: "CREATE TABLE list too many type params error",
 			cqlStmt: `CREATE TABLE ks.t_test (
 									pk 		text				Primary key,
 									non_pk 	LIST<text,text>
 								)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "SyntaxException: missing '>' at ',' at line 3, column 26",
 		},
 		{
-			name: "LIST too few type params error",
+			name: "CREATE TABLE list too few type params error",
 			cqlStmt: `CREATE TABLE ks.t_test (
 									pk 		text				Primary key,
 									non_pk 	LIST<>
 								)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "SyntaxException: missing {'ASCII', 'BIGINT', 'BLOB', 'BOOLEAN', 'COUNTER', 'DATE', 'DECIMAL', 'DOUBLE', 'FLOAT', 'INET', 'INT', 'SMALLINT', 'TEXT', 'TIME', 'TIMESTAMP', 'TIMEUUID', 'TINYINT', 'UUID', 'VARCHAR', 'VARINT'} at '>' at line 3, column 22",
 		},
 		{
-			name: "SET too many type params error",
+			name: "CREATE TABLE set too many type params error",
 			cqlStmt: `CREATE TABLE ks.t_test (
 									pk 		text				Primary key,
 									non_pk 	SET<text,text>
 								)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "SyntaxException: missing '>' at ',' at line 3, column 25",
 		},
 		{
-			name: "SET too few type params error",
+			name: "CREATE TABLE set too few type params error",
 			cqlStmt: `CREATE TABLE ks.t_test (
 									pk 		text				Primary key,
 									non_pk 	SET<>
 								)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "SyntaxException: missing {'ASCII', 'BIGINT', 'BLOB', 'BOOLEAN', 'COUNTER', 'DATE', 'DECIMAL', 'DOUBLE', 'FLOAT', 'INET', 'INT', 'SMALLINT', 'TEXT', 'TIME', 'TIMESTAMP', 'TIMEUUID', 'TINYINT', 'UUID', 'VARCHAR', 'VARINT'} at '>' at line 3, column 21",
 		},
 		{
-			name: "MAP too many type params error",
+			name: "CREATE TABLE map too many type params error",
 			cqlStmt: `CREATE TABLE ks.t_test (
 									pk 		text				Primary key,
 									non_pk 	MAP<text,text,text>
 								)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "SyntaxException: missing '>' at ',' at line 3, column 30",
 		},
 		{
-			name: "MAP too few type params error",
+			name: "CREATE TABLE map too few type params error",
 			cqlStmt: `CREATE TABLE ks.t_test (
 									pk 		text				Primary key,
 									non_pk 	MAP<text>
 								)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "SyntaxException: mismatched input '>' expecting ',' at line 3, column 25",
 		},
 		// Testcases for invalid data type of the pk.
 		{
-			name: "Table-level pk is a counter error",
+			name: "CREATE TABLE table-level pk is a counter error",
 			cqlStmt: `CREATE TABLE ks.t_pk_counter (
 						pk 		counter,
 						non_pk 	TEXT,
 						PRIMARY KEY (pk)
 					)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "counter type is not supported for PRIMARY KEY column 'pk'",
 		},
 		{
-			name: "Column-level pk is a counter error",
+			name: "CREATE TABLE column-level pk is a counter error",
 			cqlStmt: `CREATE TABLE ks.t_pk_counter (
 									pk 		counter Primary key,
 									non_pk 	TEXT
 								)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "counter type is not supported for PRIMARY KEY column 'pk'",
 		},
 		{
-			name: "Table-level pk is a map error",
+			name: "CREATE TABLE table-level pk is a map error",
 			cqlStmt: `CREATE TABLE ks.t_pk_counter (
 						pk 		map<text,smallint>,
 						non_pk 	TEXT,
 						Primary key (pk)
 					)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "Invalid non-frozen collection type map<text,smallint> for PRIMARY KEY column 'pk'",
 		},
 		{
-			name: "Column-level pk is a map error",
+			name: "CREATE TABLE column-level pk is a map error",
 			cqlStmt: `CREATE TABLE ks.t_pk_counter (
 									pk 		map<text,smallint> Primary key,
 									non_pk 	TEXT
 								)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "Invalid non-frozen collection type map<text,smallint> for PRIMARY KEY column 'pk'",
 		},
 		{
-			name: "Table-level pk is a set error",
+			name: "CREATE TABLE table-level pk is a set error",
 			cqlStmt: `CREATE TABLE ks.t_pk_counter (
 						pk 		set<double>,
 						non_pk 	TEXT,
 						Primary key (pk)
 					)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "Invalid non-frozen collection type set<double> for PRIMARY KEY column 'pk'",
 		},
 		{
-			name: "Column-level pk is a set error",
+			name: "CREATE TABLE column-level pk is a set error",
 			cqlStmt: `CREATE TABLE ks.t_pk_counter (
 									pk 		set<double> Primary key,
 									non_pk 	TEXT
 								)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "Invalid non-frozen collection type set<double> for PRIMARY KEY column 'pk'",
 		},
 		{
-			name: "Table-level pk is a list error",
+			name: "CREATE TABLE table-level pk is a list error",
 			cqlStmt: `CREATE TABLE ks.t_pk_counter (
 						pk 		list<int>,
 						non_pk 	TEXT,
 						primary  key (pk) 
 					)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "Invalid non-frozen collection type list<int> for PRIMARY KEY column 'pk'",
 		},
 		{
-			name: "Column-level pk is a list error",
+			name: "CREATE TABLE column-level pk is a list error",
 			cqlStmt: `CREATE TABLE ks.t_pk_counter (
 									pk 		list<int> Primary key,
 									non_pk 	TEXT
 								)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "Invalid non-frozen collection type list<int> for PRIMARY KEY column 'pk'",
 		},
@@ -712,6 +756,7 @@ func TestToSpannerCreate(t *testing.T) {
 			name:                "Empty query Syntax Error",
 			cqlStmt:             ``,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "SyntaxException: mismatched input '<EOF>' expecting 'CREATE' at line 1",
 		},
@@ -719,39 +764,64 @@ func TestToSpannerCreate(t *testing.T) {
 			name:                "No Create Syntax Error",
 			cqlStmt:             `select * from t `,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "SyntaxException: mismatched input 'select' expecting 'CREATE' at line 1",
 		},
 		{
-			name:                "No table name Syntax Error",
+			name:                "CREATE TABLE no table name Syntax Error",
 			cqlStmt:             `Create table (pk text)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    `SyntaxException: extraneous input '(' expecting {'IF', IDENTIFIER, IDENTIFIER_WITH_HYPHEN} at line 1, column 13`,
 		},
 		{
-			name:                "No column definition Syntax Error",
+			name:                "CREATE TABLE no column definition Syntax Error",
 			cqlStmt:             `Create table ks.t ()`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "SyntaxException: mismatched input ')' expecting IDENTIFIER at line 1, column 19",
 		},
 		// Testcases for invalid keyspace name.
 		{
-			name: "Keyspance does not match Database error",
+			name: "CREATE TABLE keyspance does not match Database error",
 			cqlStmt: `CREATE TABLE ks_2.t_test (
 									pk_text  TEXT PRIMARY KEY,
 									col_text text
 								)`,
 			expectedSpannerStmt: "",
+			expectedIgnored:     false,
 			expectError:         true,
 			expectedErrorMsg:    "Keyspace 'ks_2' does not match the Spanner database 'ks'",
+		},
+		// Testcases for non create table stmt.
+		{
+			name: "CREATE KEYSAPCE basic",
+			cqlStmt: `CREATE KEYSPACE ks-test
+					  	WITH replication = {'class': 'SimpleStrategy', 'replication_factor' : 3};`,
+			expectedSpannerStmt: "",
+			expectedIgnored:     true,
+			expectError:         false,
+			expectedErrorMsg:    "",
+		},
+		{
+			name: "CREATE KEYSAPCE with IF NOT EXISTS",
+			cqlStmt: `CREATE KEYSPACE IF NOT EXISTS ks-test2
+					  	WITH replication = {'class': 'NetworkTopologyStrategy', 'DC1' : 1, 'DC2' : 3}
+   						AND durable_writes = false;`,
+			expectedSpannerStmt: "",
+			expectedIgnored:     true,
+			expectError:         false,
+			expectedErrorMsg:    "",
 		},
 	}
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			spannerStmt, err := ToSpannerCreateTableStmt(test.cqlStmt, "ks")
+			spannerStmt, ignored, err := ToSpannerStmt(test.cqlStmt, "ks")
+			assert.Equal(t, test.expectedIgnored, ignored)
 			if test.expectError {
 				assert.Equal(t, test.expectedErrorMsg, err.Error())
 				return

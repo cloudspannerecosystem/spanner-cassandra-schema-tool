@@ -31,6 +31,9 @@ type CqlParserListener interface {
 	// EnterCreateTable is called when entering the createTable production.
 	EnterCreateTable(c *CreateTableContext)
 
+	// EnterCreateKeyspace is called when entering the createKeyspace production.
+	EnterCreateKeyspace(c *CreateKeyspaceContext)
+
 	// EnterColumnDefinitionList is called when entering the columnDefinitionList production.
 	EnterColumnDefinitionList(c *ColumnDefinitionListContext)
 
@@ -90,6 +93,9 @@ type CqlParserListener interface {
 
 	// ExitCreateTable is called when exiting the createTable production.
 	ExitCreateTable(c *CreateTableContext)
+
+	// ExitCreateKeyspace is called when exiting the createKeyspace production.
+	ExitCreateKeyspace(c *CreateKeyspaceContext)
 
 	// ExitColumnDefinitionList is called when exiting the columnDefinitionList production.
 	ExitColumnDefinitionList(c *ColumnDefinitionListContext)

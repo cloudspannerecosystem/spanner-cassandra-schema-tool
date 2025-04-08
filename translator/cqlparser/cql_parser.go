@@ -48,94 +48,103 @@ func cqlparserParserInit() {
 	staticData := &CqlParserParserStaticData
 	staticData.LiteralNames = []string{
 		"", "'CREATE'", "'TABLE'", "'IF'", "'NOT'", "'EXISTS'", "'PRIMARY'",
-		"'KEY'", "'WITH'", "'ASCII'", "'BIGINT'", "'BLOB'", "'BOOLEAN'", "'COUNTER'",
-		"'DATE'", "'DECIMAL'", "'DOUBLE'", "'FLOAT'", "'INET'", "'INT'", "'SMALLINT'",
-		"'TEXT'", "'TIME'", "'TIMESTAMP'", "'TIMEUUID'", "'TINYINT'", "'UUID'",
-		"'VARCHAR'", "'VARINT'", "'MAP'", "'SET'", "'LIST'", "';'", "'\"'",
-		"'.'", "','", "'('", "')'", "'<'", "'>'",
+		"'KEY'", "'WITH'", "'KEYSPACE'", "'ASCII'", "'BIGINT'", "'BLOB'", "'BOOLEAN'",
+		"'COUNTER'", "'DATE'", "'DECIMAL'", "'DOUBLE'", "'FLOAT'", "'INET'",
+		"'INT'", "'SMALLINT'", "'TEXT'", "'TIME'", "'TIMESTAMP'", "'TIMEUUID'",
+		"'TINYINT'", "'UUID'", "'VARCHAR'", "'VARINT'", "'MAP'", "'SET'", "'LIST'",
+		"';'", "'\"'", "'.'", "','", "'('", "')'", "'<'", "'>'",
 	}
 	staticData.SymbolicNames = []string{
 		"", "K_CREATE", "K_TABLE", "K_IF", "K_NOT", "K_EXISTS", "K_PRIMARY",
-		"K_KEY", "K_WITH", "K_ASCII", "K_BIGINT", "K_BLOB", "K_BOOLEAN", "K_COUNTER",
-		"K_DATE", "K_DECIMAL", "K_DOUBLE", "K_FLOAT", "K_INET", "K_INT", "K_SMALLINT",
-		"K_TEXT", "K_TIME", "K_TIMESTAMP", "K_TIMEUUID", "K_TINYINT", "K_UUID",
-		"K_VARCHAR", "K_VARINT", "K_MAP", "K_SET", "K_LIST", "SEMICOLON", "DQUOTE",
-		"DOT", "COMMA", "L_PAREN", "R_PAREN", "L_ANGLE_BRACKET", "R_ANGLE_BRACKET",
-		"IDENTIFIER", "IDENTIFIER_WITH_HYPHEN", "WS", "COMMENT", "MULTILINE_COMMENT",
-		"UNKNOWN",
+		"K_KEY", "K_WITH", "K_KEYSPACE", "K_ASCII", "K_BIGINT", "K_BLOB", "K_BOOLEAN",
+		"K_COUNTER", "K_DATE", "K_DECIMAL", "K_DOUBLE", "K_FLOAT", "K_INET",
+		"K_INT", "K_SMALLINT", "K_TEXT", "K_TIME", "K_TIMESTAMP", "K_TIMEUUID",
+		"K_TINYINT", "K_UUID", "K_VARCHAR", "K_VARINT", "K_MAP", "K_SET", "K_LIST",
+		"SEMICOLON", "DQUOTE", "DOT", "COMMA", "L_PAREN", "R_PAREN", "L_ANGLE_BRACKET",
+		"R_ANGLE_BRACKET", "IDENTIFIER", "IDENTIFIER_WITH_HYPHEN", "WS", "COMMENT",
+		"MULTILINE_COMMENT", "UNKNOWN",
 	}
 	staticData.RuleNames = []string{
-		"root", "cqlStatement", "createTable", "columnDefinitionList", "columnDefinition",
-		"primaryKeyClause", "primaryKey", "partitionKey", "clusteringColumns",
-		"columnName", "tableName", "keyspaceName", "generalIdentifier", "cqlType",
-		"primaryKeyKeywords", "ifNotExist", "cqlNativeType", "cqlCollectionType",
+		"root", "cqlStatement", "createTable", "createKeyspace", "columnDefinitionList",
+		"columnDefinition", "primaryKeyClause", "primaryKey", "partitionKey",
+		"clusteringColumns", "columnName", "tableName", "keyspaceName", "generalIdentifier",
+		"cqlType", "primaryKeyKeywords", "ifNotExist", "cqlNativeType", "cqlCollectionType",
 		"wihtTableOptions", "nonSemicolonToken",
 	}
 	staticData.PredictionContextCache = antlr.NewPredictionContextCache()
 	staticData.serializedATN = []int32{
-		4, 1, 45, 159, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7,
+		4, 1, 46, 176, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7,
 		4, 2, 5, 7, 5, 2, 6, 7, 6, 2, 7, 7, 7, 2, 8, 7, 8, 2, 9, 7, 9, 2, 10, 7,
 		10, 2, 11, 7, 11, 2, 12, 7, 12, 2, 13, 7, 13, 2, 14, 7, 14, 2, 15, 7, 15,
-		2, 16, 7, 16, 2, 17, 7, 17, 2, 18, 7, 18, 2, 19, 7, 19, 1, 0, 1, 0, 3,
-		0, 43, 8, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 2, 1, 2, 1, 2, 3, 2, 52, 8, 2,
-		1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 3, 2, 59, 8, 2, 1, 3, 1, 3, 1, 3, 5, 3, 64,
-		8, 3, 10, 3, 12, 3, 67, 9, 3, 1, 3, 1, 3, 3, 3, 71, 8, 3, 1, 4, 1, 4, 1,
-		4, 3, 4, 76, 8, 4, 1, 5, 1, 5, 1, 5, 1, 5, 1, 5, 1, 6, 1, 6, 1, 6, 3, 6,
-		86, 8, 6, 1, 7, 1, 7, 1, 7, 1, 7, 1, 7, 5, 7, 93, 8, 7, 10, 7, 12, 7, 96,
-		9, 7, 1, 7, 1, 7, 3, 7, 100, 8, 7, 1, 8, 1, 8, 1, 8, 5, 8, 105, 8, 8, 10,
-		8, 12, 8, 108, 9, 8, 1, 9, 1, 9, 1, 10, 1, 10, 1, 10, 3, 10, 115, 8, 10,
-		1, 10, 1, 10, 1, 11, 1, 11, 1, 12, 1, 12, 1, 13, 1, 13, 3, 13, 125, 8,
-		13, 1, 14, 1, 14, 1, 14, 1, 15, 1, 15, 1, 15, 1, 15, 1, 16, 1, 16, 1, 17,
-		1, 17, 1, 17, 1, 17, 1, 17, 1, 17, 1, 17, 1, 17, 1, 17, 1, 17, 1, 17, 1,
-		17, 3, 17, 148, 8, 17, 1, 18, 1, 18, 5, 18, 152, 8, 18, 10, 18, 12, 18,
-		155, 9, 18, 1, 19, 1, 19, 1, 19, 0, 0, 20, 0, 2, 4, 6, 8, 10, 12, 14, 16,
-		18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 0, 4, 1, 0, 40, 41, 1, 0, 9,
-		28, 1, 0, 30, 31, 3, 0, 1, 31, 33, 41, 45, 45, 152, 0, 40, 1, 0, 0, 0,
-		2, 46, 1, 0, 0, 0, 4, 48, 1, 0, 0, 0, 6, 60, 1, 0, 0, 0, 8, 72, 1, 0, 0,
-		0, 10, 77, 1, 0, 0, 0, 12, 82, 1, 0, 0, 0, 14, 99, 1, 0, 0, 0, 16, 101,
-		1, 0, 0, 0, 18, 109, 1, 0, 0, 0, 20, 114, 1, 0, 0, 0, 22, 118, 1, 0, 0,
-		0, 24, 120, 1, 0, 0, 0, 26, 124, 1, 0, 0, 0, 28, 126, 1, 0, 0, 0, 30, 129,
-		1, 0, 0, 0, 32, 133, 1, 0, 0, 0, 34, 147, 1, 0, 0, 0, 36, 149, 1, 0, 0,
-		0, 38, 156, 1, 0, 0, 0, 40, 42, 3, 2, 1, 0, 41, 43, 5, 32, 0, 0, 42, 41,
-		1, 0, 0, 0, 42, 43, 1, 0, 0, 0, 43, 44, 1, 0, 0, 0, 44, 45, 5, 0, 0, 1,
-		45, 1, 1, 0, 0, 0, 46, 47, 3, 4, 2, 0, 47, 3, 1, 0, 0, 0, 48, 49, 5, 1,
-		0, 0, 49, 51, 5, 2, 0, 0, 50, 52, 3, 30, 15, 0, 51, 50, 1, 0, 0, 0, 51,
-		52, 1, 0, 0, 0, 52, 53, 1, 0, 0, 0, 53, 54, 3, 20, 10, 0, 54, 55, 5, 36,
-		0, 0, 55, 56, 3, 6, 3, 0, 56, 58, 5, 37, 0, 0, 57, 59, 3, 36, 18, 0, 58,
-		57, 1, 0, 0, 0, 58, 59, 1, 0, 0, 0, 59, 5, 1, 0, 0, 0, 60, 65, 3, 8, 4,
-		0, 61, 62, 5, 35, 0, 0, 62, 64, 3, 8, 4, 0, 63, 61, 1, 0, 0, 0, 64, 67,
-		1, 0, 0, 0, 65, 63, 1, 0, 0, 0, 65, 66, 1, 0, 0, 0, 66, 70, 1, 0, 0, 0,
-		67, 65, 1, 0, 0, 0, 68, 69, 5, 35, 0, 0, 69, 71, 3, 10, 5, 0, 70, 68, 1,
-		0, 0, 0, 70, 71, 1, 0, 0, 0, 71, 7, 1, 0, 0, 0, 72, 73, 3, 18, 9, 0, 73,
-		75, 3, 26, 13, 0, 74, 76, 3, 28, 14, 0, 75, 74, 1, 0, 0, 0, 75, 76, 1,
-		0, 0, 0, 76, 9, 1, 0, 0, 0, 77, 78, 3, 28, 14, 0, 78, 79, 5, 36, 0, 0,
-		79, 80, 3, 12, 6, 0, 80, 81, 5, 37, 0, 0, 81, 11, 1, 0, 0, 0, 82, 85, 3,
-		14, 7, 0, 83, 84, 5, 35, 0, 0, 84, 86, 3, 16, 8, 0, 85, 83, 1, 0, 0, 0,
-		85, 86, 1, 0, 0, 0, 86, 13, 1, 0, 0, 0, 87, 100, 3, 18, 9, 0, 88, 89, 5,
-		36, 0, 0, 89, 94, 3, 18, 9, 0, 90, 91, 5, 35, 0, 0, 91, 93, 3, 18, 9, 0,
-		92, 90, 1, 0, 0, 0, 93, 96, 1, 0, 0, 0, 94, 92, 1, 0, 0, 0, 94, 95, 1,
-		0, 0, 0, 95, 97, 1, 0, 0, 0, 96, 94, 1, 0, 0, 0, 97, 98, 5, 37, 0, 0, 98,
-		100, 1, 0, 0, 0, 99, 87, 1, 0, 0, 0, 99, 88, 1, 0, 0, 0, 100, 15, 1, 0,
-		0, 0, 101, 106, 3, 18, 9, 0, 102, 103, 5, 35, 0, 0, 103, 105, 3, 18, 9,
-		0, 104, 102, 1, 0, 0, 0, 105, 108, 1, 0, 0, 0, 106, 104, 1, 0, 0, 0, 106,
-		107, 1, 0, 0, 0, 107, 17, 1, 0, 0, 0, 108, 106, 1, 0, 0, 0, 109, 110, 5,
-		40, 0, 0, 110, 19, 1, 0, 0, 0, 111, 112, 3, 22, 11, 0, 112, 113, 5, 34,
-		0, 0, 113, 115, 1, 0, 0, 0, 114, 111, 1, 0, 0, 0, 114, 115, 1, 0, 0, 0,
-		115, 116, 1, 0, 0, 0, 116, 117, 5, 40, 0, 0, 117, 21, 1, 0, 0, 0, 118,
-		119, 3, 24, 12, 0, 119, 23, 1, 0, 0, 0, 120, 121, 7, 0, 0, 0, 121, 25,
-		1, 0, 0, 0, 122, 125, 3, 32, 16, 0, 123, 125, 3, 34, 17, 0, 124, 122, 1,
-		0, 0, 0, 124, 123, 1, 0, 0, 0, 125, 27, 1, 0, 0, 0, 126, 127, 5, 6, 0,
-		0, 127, 128, 5, 7, 0, 0, 128, 29, 1, 0, 0, 0, 129, 130, 5, 3, 0, 0, 130,
-		131, 5, 4, 0, 0, 131, 132, 5, 5, 0, 0, 132, 31, 1, 0, 0, 0, 133, 134, 7,
-		1, 0, 0, 134, 33, 1, 0, 0, 0, 135, 136, 5, 29, 0, 0, 136, 137, 5, 38, 0,
-		0, 137, 138, 3, 32, 16, 0, 138, 139, 5, 35, 0, 0, 139, 140, 3, 32, 16,
-		0, 140, 141, 5, 39, 0, 0, 141, 148, 1, 0, 0, 0, 142, 143, 7, 2, 0, 0, 143,
-		144, 5, 38, 0, 0, 144, 145, 3, 32, 16, 0, 145, 146, 5, 39, 0, 0, 146, 148,
-		1, 0, 0, 0, 147, 135, 1, 0, 0, 0, 147, 142, 1, 0, 0, 0, 148, 35, 1, 0,
-		0, 0, 149, 153, 5, 8, 0, 0, 150, 152, 3, 38, 19, 0, 151, 150, 1, 0, 0,
-		0, 152, 155, 1, 0, 0, 0, 153, 151, 1, 0, 0, 0, 153, 154, 1, 0, 0, 0, 154,
-		37, 1, 0, 0, 0, 155, 153, 1, 0, 0, 0, 156, 157, 7, 3, 0, 0, 157, 39, 1,
-		0, 0, 0, 14, 42, 51, 58, 65, 70, 75, 85, 94, 99, 106, 114, 124, 147, 153,
+		2, 16, 7, 16, 2, 17, 7, 17, 2, 18, 7, 18, 2, 19, 7, 19, 2, 20, 7, 20, 1,
+		0, 1, 0, 3, 0, 45, 8, 0, 1, 0, 1, 0, 1, 1, 1, 1, 3, 1, 51, 8, 1, 1, 2,
+		1, 2, 1, 2, 3, 2, 56, 8, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 3, 2, 63, 8,
+		2, 1, 3, 1, 3, 1, 3, 3, 3, 68, 8, 3, 1, 3, 1, 3, 1, 3, 5, 3, 73, 8, 3,
+		10, 3, 12, 3, 76, 9, 3, 1, 4, 1, 4, 1, 4, 5, 4, 81, 8, 4, 10, 4, 12, 4,
+		84, 9, 4, 1, 4, 1, 4, 3, 4, 88, 8, 4, 1, 5, 1, 5, 1, 5, 3, 5, 93, 8, 5,
+		1, 6, 1, 6, 1, 6, 1, 6, 1, 6, 1, 7, 1, 7, 1, 7, 3, 7, 103, 8, 7, 1, 8,
+		1, 8, 1, 8, 1, 8, 1, 8, 5, 8, 110, 8, 8, 10, 8, 12, 8, 113, 9, 8, 1, 8,
+		1, 8, 3, 8, 117, 8, 8, 1, 9, 1, 9, 1, 9, 5, 9, 122, 8, 9, 10, 9, 12, 9,
+		125, 9, 9, 1, 10, 1, 10, 1, 11, 1, 11, 1, 11, 3, 11, 132, 8, 11, 1, 11,
+		1, 11, 1, 12, 1, 12, 1, 13, 1, 13, 1, 14, 1, 14, 3, 14, 142, 8, 14, 1,
+		15, 1, 15, 1, 15, 1, 16, 1, 16, 1, 16, 1, 16, 1, 17, 1, 17, 1, 18, 1, 18,
+		1, 18, 1, 18, 1, 18, 1, 18, 1, 18, 1, 18, 1, 18, 1, 18, 1, 18, 1, 18, 3,
+		18, 165, 8, 18, 1, 19, 1, 19, 5, 19, 169, 8, 19, 10, 19, 12, 19, 172, 9,
+		19, 1, 20, 1, 20, 1, 20, 0, 0, 21, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20,
+		22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 0, 4, 1, 0, 41, 42, 1, 0, 10, 29,
+		1, 0, 31, 32, 3, 0, 1, 32, 34, 42, 46, 46, 171, 0, 42, 1, 0, 0, 0, 2, 50,
+		1, 0, 0, 0, 4, 52, 1, 0, 0, 0, 6, 64, 1, 0, 0, 0, 8, 77, 1, 0, 0, 0, 10,
+		89, 1, 0, 0, 0, 12, 94, 1, 0, 0, 0, 14, 99, 1, 0, 0, 0, 16, 116, 1, 0,
+		0, 0, 18, 118, 1, 0, 0, 0, 20, 126, 1, 0, 0, 0, 22, 131, 1, 0, 0, 0, 24,
+		135, 1, 0, 0, 0, 26, 137, 1, 0, 0, 0, 28, 141, 1, 0, 0, 0, 30, 143, 1,
+		0, 0, 0, 32, 146, 1, 0, 0, 0, 34, 150, 1, 0, 0, 0, 36, 164, 1, 0, 0, 0,
+		38, 166, 1, 0, 0, 0, 40, 173, 1, 0, 0, 0, 42, 44, 3, 2, 1, 0, 43, 45, 5,
+		33, 0, 0, 44, 43, 1, 0, 0, 0, 44, 45, 1, 0, 0, 0, 45, 46, 1, 0, 0, 0, 46,
+		47, 5, 0, 0, 1, 47, 1, 1, 0, 0, 0, 48, 51, 3, 4, 2, 0, 49, 51, 3, 6, 3,
+		0, 50, 48, 1, 0, 0, 0, 50, 49, 1, 0, 0, 0, 51, 3, 1, 0, 0, 0, 52, 53, 5,
+		1, 0, 0, 53, 55, 5, 2, 0, 0, 54, 56, 3, 32, 16, 0, 55, 54, 1, 0, 0, 0,
+		55, 56, 1, 0, 0, 0, 56, 57, 1, 0, 0, 0, 57, 58, 3, 22, 11, 0, 58, 59, 5,
+		37, 0, 0, 59, 60, 3, 8, 4, 0, 60, 62, 5, 38, 0, 0, 61, 63, 3, 38, 19, 0,
+		62, 61, 1, 0, 0, 0, 62, 63, 1, 0, 0, 0, 63, 5, 1, 0, 0, 0, 64, 65, 5, 1,
+		0, 0, 65, 67, 5, 9, 0, 0, 66, 68, 3, 32, 16, 0, 67, 66, 1, 0, 0, 0, 67,
+		68, 1, 0, 0, 0, 68, 69, 1, 0, 0, 0, 69, 70, 3, 24, 12, 0, 70, 74, 5, 8,
+		0, 0, 71, 73, 3, 40, 20, 0, 72, 71, 1, 0, 0, 0, 73, 76, 1, 0, 0, 0, 74,
+		72, 1, 0, 0, 0, 74, 75, 1, 0, 0, 0, 75, 7, 1, 0, 0, 0, 76, 74, 1, 0, 0,
+		0, 77, 82, 3, 10, 5, 0, 78, 79, 5, 36, 0, 0, 79, 81, 3, 10, 5, 0, 80, 78,
+		1, 0, 0, 0, 81, 84, 1, 0, 0, 0, 82, 80, 1, 0, 0, 0, 82, 83, 1, 0, 0, 0,
+		83, 87, 1, 0, 0, 0, 84, 82, 1, 0, 0, 0, 85, 86, 5, 36, 0, 0, 86, 88, 3,
+		12, 6, 0, 87, 85, 1, 0, 0, 0, 87, 88, 1, 0, 0, 0, 88, 9, 1, 0, 0, 0, 89,
+		90, 3, 20, 10, 0, 90, 92, 3, 28, 14, 0, 91, 93, 3, 30, 15, 0, 92, 91, 1,
+		0, 0, 0, 92, 93, 1, 0, 0, 0, 93, 11, 1, 0, 0, 0, 94, 95, 3, 30, 15, 0,
+		95, 96, 5, 37, 0, 0, 96, 97, 3, 14, 7, 0, 97, 98, 5, 38, 0, 0, 98, 13,
+		1, 0, 0, 0, 99, 102, 3, 16, 8, 0, 100, 101, 5, 36, 0, 0, 101, 103, 3, 18,
+		9, 0, 102, 100, 1, 0, 0, 0, 102, 103, 1, 0, 0, 0, 103, 15, 1, 0, 0, 0,
+		104, 117, 3, 20, 10, 0, 105, 106, 5, 37, 0, 0, 106, 111, 3, 20, 10, 0,
+		107, 108, 5, 36, 0, 0, 108, 110, 3, 20, 10, 0, 109, 107, 1, 0, 0, 0, 110,
+		113, 1, 0, 0, 0, 111, 109, 1, 0, 0, 0, 111, 112, 1, 0, 0, 0, 112, 114,
+		1, 0, 0, 0, 113, 111, 1, 0, 0, 0, 114, 115, 5, 38, 0, 0, 115, 117, 1, 0,
+		0, 0, 116, 104, 1, 0, 0, 0, 116, 105, 1, 0, 0, 0, 117, 17, 1, 0, 0, 0,
+		118, 123, 3, 20, 10, 0, 119, 120, 5, 36, 0, 0, 120, 122, 3, 20, 10, 0,
+		121, 119, 1, 0, 0, 0, 122, 125, 1, 0, 0, 0, 123, 121, 1, 0, 0, 0, 123,
+		124, 1, 0, 0, 0, 124, 19, 1, 0, 0, 0, 125, 123, 1, 0, 0, 0, 126, 127, 5,
+		41, 0, 0, 127, 21, 1, 0, 0, 0, 128, 129, 3, 24, 12, 0, 129, 130, 5, 35,
+		0, 0, 130, 132, 1, 0, 0, 0, 131, 128, 1, 0, 0, 0, 131, 132, 1, 0, 0, 0,
+		132, 133, 1, 0, 0, 0, 133, 134, 5, 41, 0, 0, 134, 23, 1, 0, 0, 0, 135,
+		136, 3, 26, 13, 0, 136, 25, 1, 0, 0, 0, 137, 138, 7, 0, 0, 0, 138, 27,
+		1, 0, 0, 0, 139, 142, 3, 34, 17, 0, 140, 142, 3, 36, 18, 0, 141, 139, 1,
+		0, 0, 0, 141, 140, 1, 0, 0, 0, 142, 29, 1, 0, 0, 0, 143, 144, 5, 6, 0,
+		0, 144, 145, 5, 7, 0, 0, 145, 31, 1, 0, 0, 0, 146, 147, 5, 3, 0, 0, 147,
+		148, 5, 4, 0, 0, 148, 149, 5, 5, 0, 0, 149, 33, 1, 0, 0, 0, 150, 151, 7,
+		1, 0, 0, 151, 35, 1, 0, 0, 0, 152, 153, 5, 30, 0, 0, 153, 154, 5, 39, 0,
+		0, 154, 155, 3, 34, 17, 0, 155, 156, 5, 36, 0, 0, 156, 157, 3, 34, 17,
+		0, 157, 158, 5, 40, 0, 0, 158, 165, 1, 0, 0, 0, 159, 160, 7, 2, 0, 0, 160,
+		161, 5, 39, 0, 0, 161, 162, 3, 34, 17, 0, 162, 163, 5, 40, 0, 0, 163, 165,
+		1, 0, 0, 0, 164, 152, 1, 0, 0, 0, 164, 159, 1, 0, 0, 0, 165, 37, 1, 0,
+		0, 0, 166, 170, 5, 8, 0, 0, 167, 169, 3, 40, 20, 0, 168, 167, 1, 0, 0,
+		0, 169, 172, 1, 0, 0, 0, 170, 168, 1, 0, 0, 0, 170, 171, 1, 0, 0, 0, 171,
+		39, 1, 0, 0, 0, 172, 170, 1, 0, 0, 0, 173, 174, 7, 3, 0, 0, 174, 41, 1,
+		0, 0, 0, 17, 44, 50, 55, 62, 67, 74, 82, 87, 92, 102, 111, 116, 123, 131,
+		141, 164, 170,
 	}
 	deserializer := antlr.NewATNDeserializer(nil)
 	staticData.atn = deserializer.Deserialize(staticData.serializedATN)
@@ -182,43 +191,44 @@ const (
 	CqlParserK_PRIMARY              = 6
 	CqlParserK_KEY                  = 7
 	CqlParserK_WITH                 = 8
-	CqlParserK_ASCII                = 9
-	CqlParserK_BIGINT               = 10
-	CqlParserK_BLOB                 = 11
-	CqlParserK_BOOLEAN              = 12
-	CqlParserK_COUNTER              = 13
-	CqlParserK_DATE                 = 14
-	CqlParserK_DECIMAL              = 15
-	CqlParserK_DOUBLE               = 16
-	CqlParserK_FLOAT                = 17
-	CqlParserK_INET                 = 18
-	CqlParserK_INT                  = 19
-	CqlParserK_SMALLINT             = 20
-	CqlParserK_TEXT                 = 21
-	CqlParserK_TIME                 = 22
-	CqlParserK_TIMESTAMP            = 23
-	CqlParserK_TIMEUUID             = 24
-	CqlParserK_TINYINT              = 25
-	CqlParserK_UUID                 = 26
-	CqlParserK_VARCHAR              = 27
-	CqlParserK_VARINT               = 28
-	CqlParserK_MAP                  = 29
-	CqlParserK_SET                  = 30
-	CqlParserK_LIST                 = 31
-	CqlParserSEMICOLON              = 32
-	CqlParserDQUOTE                 = 33
-	CqlParserDOT                    = 34
-	CqlParserCOMMA                  = 35
-	CqlParserL_PAREN                = 36
-	CqlParserR_PAREN                = 37
-	CqlParserL_ANGLE_BRACKET        = 38
-	CqlParserR_ANGLE_BRACKET        = 39
-	CqlParserIDENTIFIER             = 40
-	CqlParserIDENTIFIER_WITH_HYPHEN = 41
-	CqlParserWS                     = 42
-	CqlParserCOMMENT                = 43
-	CqlParserMULTILINE_COMMENT      = 44
-	CqlParserUNKNOWN                = 45
+	CqlParserK_KEYSPACE             = 9
+	CqlParserK_ASCII                = 10
+	CqlParserK_BIGINT               = 11
+	CqlParserK_BLOB                 = 12
+	CqlParserK_BOOLEAN              = 13
+	CqlParserK_COUNTER              = 14
+	CqlParserK_DATE                 = 15
+	CqlParserK_DECIMAL              = 16
+	CqlParserK_DOUBLE               = 17
+	CqlParserK_FLOAT                = 18
+	CqlParserK_INET                 = 19
+	CqlParserK_INT                  = 20
+	CqlParserK_SMALLINT             = 21
+	CqlParserK_TEXT                 = 22
+	CqlParserK_TIME                 = 23
+	CqlParserK_TIMESTAMP            = 24
+	CqlParserK_TIMEUUID             = 25
+	CqlParserK_TINYINT              = 26
+	CqlParserK_UUID                 = 27
+	CqlParserK_VARCHAR              = 28
+	CqlParserK_VARINT               = 29
+	CqlParserK_MAP                  = 30
+	CqlParserK_SET                  = 31
+	CqlParserK_LIST                 = 32
+	CqlParserSEMICOLON              = 33
+	CqlParserDQUOTE                 = 34
+	CqlParserDOT                    = 35
+	CqlParserCOMMA                  = 36
+	CqlParserL_PAREN                = 37
+	CqlParserR_PAREN                = 38
+	CqlParserL_ANGLE_BRACKET        = 39
+	CqlParserR_ANGLE_BRACKET        = 40
+	CqlParserIDENTIFIER             = 41
+	CqlParserIDENTIFIER_WITH_HYPHEN = 42
+	CqlParserWS                     = 43
+	CqlParserCOMMENT                = 44
+	CqlParserMULTILINE_COMMENT      = 45
+	CqlParserUNKNOWN                = 46
 )
 
 // CqlParser rules.
@@ -226,23 +236,24 @@ const (
 	CqlParserRULE_root                 = 0
 	CqlParserRULE_cqlStatement         = 1
 	CqlParserRULE_createTable          = 2
-	CqlParserRULE_columnDefinitionList = 3
-	CqlParserRULE_columnDefinition     = 4
-	CqlParserRULE_primaryKeyClause     = 5
-	CqlParserRULE_primaryKey           = 6
-	CqlParserRULE_partitionKey         = 7
-	CqlParserRULE_clusteringColumns    = 8
-	CqlParserRULE_columnName           = 9
-	CqlParserRULE_tableName            = 10
-	CqlParserRULE_keyspaceName         = 11
-	CqlParserRULE_generalIdentifier    = 12
-	CqlParserRULE_cqlType              = 13
-	CqlParserRULE_primaryKeyKeywords   = 14
-	CqlParserRULE_ifNotExist           = 15
-	CqlParserRULE_cqlNativeType        = 16
-	CqlParserRULE_cqlCollectionType    = 17
-	CqlParserRULE_wihtTableOptions     = 18
-	CqlParserRULE_nonSemicolonToken    = 19
+	CqlParserRULE_createKeyspace       = 3
+	CqlParserRULE_columnDefinitionList = 4
+	CqlParserRULE_columnDefinition     = 5
+	CqlParserRULE_primaryKeyClause     = 6
+	CqlParserRULE_primaryKey           = 7
+	CqlParserRULE_partitionKey         = 8
+	CqlParserRULE_clusteringColumns    = 9
+	CqlParserRULE_columnName           = 10
+	CqlParserRULE_tableName            = 11
+	CqlParserRULE_keyspaceName         = 12
+	CqlParserRULE_generalIdentifier    = 13
+	CqlParserRULE_cqlType              = 14
+	CqlParserRULE_primaryKeyKeywords   = 15
+	CqlParserRULE_ifNotExist           = 16
+	CqlParserRULE_cqlNativeType        = 17
+	CqlParserRULE_cqlCollectionType    = 18
+	CqlParserRULE_wihtTableOptions     = 19
+	CqlParserRULE_nonSemicolonToken    = 20
 )
 
 // IRootContext is an interface to support dynamic dispatch.
@@ -344,10 +355,10 @@ func (p *CqlParser) Root() (localctx IRootContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(40)
+		p.SetState(42)
 		p.CqlStatement()
 	}
-	p.SetState(42)
+	p.SetState(44)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -356,7 +367,7 @@ func (p *CqlParser) Root() (localctx IRootContext) {
 
 	if _la == CqlParserSEMICOLON {
 		{
-			p.SetState(41)
+			p.SetState(43)
 			p.Match(CqlParserSEMICOLON)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -366,7 +377,7 @@ func (p *CqlParser) Root() (localctx IRootContext) {
 
 	}
 	{
-		p.SetState(44)
+		p.SetState(46)
 		p.Match(CqlParserEOF)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -396,6 +407,7 @@ type ICqlStatementContext interface {
 
 	// Getter signatures
 	CreateTable() ICreateTableContext
+	CreateKeyspace() ICreateKeyspaceContext
 
 	// IsCqlStatementContext differentiates from other interfaces.
 	IsCqlStatementContext()
@@ -449,6 +461,22 @@ func (s *CqlStatementContext) CreateTable() ICreateTableContext {
 	return t.(ICreateTableContext)
 }
 
+func (s *CqlStatementContext) CreateKeyspace() ICreateKeyspaceContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(ICreateKeyspaceContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(ICreateKeyspaceContext)
+}
+
 func (s *CqlStatementContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
@@ -472,10 +500,29 @@ func (s *CqlStatementContext) ExitRule(listener antlr.ParseTreeListener) {
 func (p *CqlParser) CqlStatement() (localctx ICqlStatementContext) {
 	localctx = NewCqlStatementContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 2, CqlParserRULE_cqlStatement)
-	p.EnterOuterAlt(localctx, 1)
-	{
-		p.SetState(46)
-		p.CreateTable()
+	p.SetState(50)
+	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
+
+	switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 1, p.GetParserRuleContext()) {
+	case 1:
+		p.EnterOuterAlt(localctx, 1)
+		{
+			p.SetState(48)
+			p.CreateTable()
+		}
+
+	case 2:
+		p.EnterOuterAlt(localctx, 2)
+		{
+			p.SetState(49)
+			p.CreateKeyspace()
+		}
+
+	case antlr.ATNInvalidAltNumber:
+		goto errorExit
 	}
 
 errorExit:
@@ -651,7 +698,7 @@ func (p *CqlParser) CreateTable() (localctx ICreateTableContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(48)
+		p.SetState(52)
 		p.Match(CqlParserK_CREATE)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -659,14 +706,14 @@ func (p *CqlParser) CreateTable() (localctx ICreateTableContext) {
 		}
 	}
 	{
-		p.SetState(49)
+		p.SetState(53)
 		p.Match(CqlParserK_TABLE)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
-	p.SetState(51)
+	p.SetState(55)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -675,17 +722,17 @@ func (p *CqlParser) CreateTable() (localctx ICreateTableContext) {
 
 	if _la == CqlParserK_IF {
 		{
-			p.SetState(50)
+			p.SetState(54)
 			p.IfNotExist()
 		}
 
 	}
 	{
-		p.SetState(53)
+		p.SetState(57)
 		p.TableName()
 	}
 	{
-		p.SetState(54)
+		p.SetState(58)
 		p.Match(CqlParserL_PAREN)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -693,18 +740,18 @@ func (p *CqlParser) CreateTable() (localctx ICreateTableContext) {
 		}
 	}
 	{
-		p.SetState(55)
+		p.SetState(59)
 		p.ColumnDefinitionList()
 	}
 	{
-		p.SetState(56)
+		p.SetState(60)
 		p.Match(CqlParserR_PAREN)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
-	p.SetState(58)
+	p.SetState(62)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -713,10 +760,249 @@ func (p *CqlParser) CreateTable() (localctx ICreateTableContext) {
 
 	if _la == CqlParserK_WITH {
 		{
-			p.SetState(57)
+			p.SetState(61)
 			p.WihtTableOptions()
 		}
 
+	}
+
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
+	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
+}
+
+// ICreateKeyspaceContext is an interface to support dynamic dispatch.
+type ICreateKeyspaceContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+
+	// Getter signatures
+	K_CREATE() antlr.TerminalNode
+	K_KEYSPACE() antlr.TerminalNode
+	KeyspaceName() IKeyspaceNameContext
+	K_WITH() antlr.TerminalNode
+	IfNotExist() IIfNotExistContext
+	AllNonSemicolonToken() []INonSemicolonTokenContext
+	NonSemicolonToken(i int) INonSemicolonTokenContext
+
+	// IsCreateKeyspaceContext differentiates from other interfaces.
+	IsCreateKeyspaceContext()
+}
+
+type CreateKeyspaceContext struct {
+	antlr.BaseParserRuleContext
+	parser antlr.Parser
+}
+
+func NewEmptyCreateKeyspaceContext() *CreateKeyspaceContext {
+	var p = new(CreateKeyspaceContext)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = CqlParserRULE_createKeyspace
+	return p
+}
+
+func InitEmptyCreateKeyspaceContext(p *CreateKeyspaceContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = CqlParserRULE_createKeyspace
+}
+
+func (*CreateKeyspaceContext) IsCreateKeyspaceContext() {}
+
+func NewCreateKeyspaceContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *CreateKeyspaceContext {
+	var p = new(CreateKeyspaceContext)
+
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = CqlParserRULE_createKeyspace
+
+	return p
+}
+
+func (s *CreateKeyspaceContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *CreateKeyspaceContext) K_CREATE() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_CREATE, 0)
+}
+
+func (s *CreateKeyspaceContext) K_KEYSPACE() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_KEYSPACE, 0)
+}
+
+func (s *CreateKeyspaceContext) KeyspaceName() IKeyspaceNameContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IKeyspaceNameContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IKeyspaceNameContext)
+}
+
+func (s *CreateKeyspaceContext) K_WITH() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_WITH, 0)
+}
+
+func (s *CreateKeyspaceContext) IfNotExist() IIfNotExistContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IIfNotExistContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IIfNotExistContext)
+}
+
+func (s *CreateKeyspaceContext) AllNonSemicolonToken() []INonSemicolonTokenContext {
+	children := s.GetChildren()
+	len := 0
+	for _, ctx := range children {
+		if _, ok := ctx.(INonSemicolonTokenContext); ok {
+			len++
+		}
+	}
+
+	tst := make([]INonSemicolonTokenContext, len)
+	i := 0
+	for _, ctx := range children {
+		if t, ok := ctx.(INonSemicolonTokenContext); ok {
+			tst[i] = t.(INonSemicolonTokenContext)
+			i++
+		}
+	}
+
+	return tst
+}
+
+func (s *CreateKeyspaceContext) NonSemicolonToken(i int) INonSemicolonTokenContext {
+	var t antlr.RuleContext
+	j := 0
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(INonSemicolonTokenContext); ok {
+			if j == i {
+				t = ctx.(antlr.RuleContext)
+				break
+			}
+			j++
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(INonSemicolonTokenContext)
+}
+
+func (s *CreateKeyspaceContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *CreateKeyspaceContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+func (s *CreateKeyspaceContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(CqlParserListener); ok {
+		listenerT.EnterCreateKeyspace(s)
+	}
+}
+
+func (s *CreateKeyspaceContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(CqlParserListener); ok {
+		listenerT.ExitCreateKeyspace(s)
+	}
+}
+
+func (p *CqlParser) CreateKeyspace() (localctx ICreateKeyspaceContext) {
+	localctx = NewCreateKeyspaceContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 6, CqlParserRULE_createKeyspace)
+	var _la int
+
+	p.EnterOuterAlt(localctx, 1)
+	{
+		p.SetState(64)
+		p.Match(CqlParserK_CREATE)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+	{
+		p.SetState(65)
+		p.Match(CqlParserK_KEYSPACE)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+	p.SetState(67)
+	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
+	_la = p.GetTokenStream().LA(1)
+
+	if _la == CqlParserK_IF {
+		{
+			p.SetState(66)
+			p.IfNotExist()
+		}
+
+	}
+	{
+		p.SetState(69)
+		p.KeyspaceName()
+	}
+	{
+		p.SetState(70)
+		p.Match(CqlParserK_WITH)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+	p.SetState(74)
+	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
+	_la = p.GetTokenStream().LA(1)
+
+	for (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&79156247265278) != 0 {
+		{
+			p.SetState(71)
+			p.NonSemicolonToken()
+		}
+
+		p.SetState(76)
+		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
+		_la = p.GetTokenStream().LA(1)
 	}
 
 errorExit:
@@ -869,29 +1155,29 @@ func (s *ColumnDefinitionListContext) ExitRule(listener antlr.ParseTreeListener)
 
 func (p *CqlParser) ColumnDefinitionList() (localctx IColumnDefinitionListContext) {
 	localctx = NewColumnDefinitionListContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 6, CqlParserRULE_columnDefinitionList)
+	p.EnterRule(localctx, 8, CqlParserRULE_columnDefinitionList)
 	var _la int
 
 	var _alt int
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(60)
+		p.SetState(77)
 		p.ColumnDefinition()
 	}
-	p.SetState(65)
+	p.SetState(82)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
-	_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 3, p.GetParserRuleContext())
+	_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 6, p.GetParserRuleContext())
 	if p.HasError() {
 		goto errorExit
 	}
 	for _alt != 2 && _alt != antlr.ATNInvalidAltNumber {
 		if _alt == 1 {
 			{
-				p.SetState(61)
+				p.SetState(78)
 				p.Match(CqlParserCOMMA)
 				if p.HasError() {
 					// Recognition error - abort rule
@@ -899,22 +1185,22 @@ func (p *CqlParser) ColumnDefinitionList() (localctx IColumnDefinitionListContex
 				}
 			}
 			{
-				p.SetState(62)
+				p.SetState(79)
 				p.ColumnDefinition()
 			}
 
 		}
-		p.SetState(67)
+		p.SetState(84)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
 		}
-		_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 3, p.GetParserRuleContext())
+		_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 6, p.GetParserRuleContext())
 		if p.HasError() {
 			goto errorExit
 		}
 	}
-	p.SetState(70)
+	p.SetState(87)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -923,7 +1209,7 @@ func (p *CqlParser) ColumnDefinitionList() (localctx IColumnDefinitionListContex
 
 	if _la == CqlParserCOMMA {
 		{
-			p.SetState(68)
+			p.SetState(85)
 			p.Match(CqlParserCOMMA)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -931,7 +1217,7 @@ func (p *CqlParser) ColumnDefinitionList() (localctx IColumnDefinitionListContex
 			}
 		}
 		{
-			p.SetState(69)
+			p.SetState(86)
 			p.PrimaryKeyClause()
 		}
 
@@ -1068,19 +1354,19 @@ func (s *ColumnDefinitionContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *CqlParser) ColumnDefinition() (localctx IColumnDefinitionContext) {
 	localctx = NewColumnDefinitionContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 8, CqlParserRULE_columnDefinition)
+	p.EnterRule(localctx, 10, CqlParserRULE_columnDefinition)
 	var _la int
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(72)
+		p.SetState(89)
 		p.ColumnName()
 	}
 	{
-		p.SetState(73)
+		p.SetState(90)
 		p.CqlType()
 	}
-	p.SetState(75)
+	p.SetState(92)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -1089,7 +1375,7 @@ func (p *CqlParser) ColumnDefinition() (localctx IColumnDefinitionContext) {
 
 	if _la == CqlParserK_PRIMARY {
 		{
-			p.SetState(74)
+			p.SetState(91)
 			p.PrimaryKeyKeywords()
 		}
 
@@ -1219,14 +1505,14 @@ func (s *PrimaryKeyClauseContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *CqlParser) PrimaryKeyClause() (localctx IPrimaryKeyClauseContext) {
 	localctx = NewPrimaryKeyClauseContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 10, CqlParserRULE_primaryKeyClause)
+	p.EnterRule(localctx, 12, CqlParserRULE_primaryKeyClause)
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(77)
+		p.SetState(94)
 		p.PrimaryKeyKeywords()
 	}
 	{
-		p.SetState(78)
+		p.SetState(95)
 		p.Match(CqlParserL_PAREN)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -1234,11 +1520,11 @@ func (p *CqlParser) PrimaryKeyClause() (localctx IPrimaryKeyClauseContext) {
 		}
 	}
 	{
-		p.SetState(79)
+		p.SetState(96)
 		p.PrimaryKey()
 	}
 	{
-		p.SetState(80)
+		p.SetState(97)
 		p.Match(CqlParserR_PAREN)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -1365,15 +1651,15 @@ func (s *PrimaryKeyContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *CqlParser) PrimaryKey() (localctx IPrimaryKeyContext) {
 	localctx = NewPrimaryKeyContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 12, CqlParserRULE_primaryKey)
+	p.EnterRule(localctx, 14, CqlParserRULE_primaryKey)
 	var _la int
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(82)
+		p.SetState(99)
 		p.PartitionKey()
 	}
-	p.SetState(85)
+	p.SetState(102)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -1382,7 +1668,7 @@ func (p *CqlParser) PrimaryKey() (localctx IPrimaryKeyContext) {
 
 	if _la == CqlParserCOMMA {
 		{
-			p.SetState(83)
+			p.SetState(100)
 			p.Match(CqlParserCOMMA)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -1390,7 +1676,7 @@ func (p *CqlParser) PrimaryKey() (localctx IPrimaryKeyContext) {
 			}
 		}
 		{
-			p.SetState(84)
+			p.SetState(101)
 			p.ClusteringColumns()
 		}
 
@@ -1539,10 +1825,10 @@ func (s *PartitionKeyContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *CqlParser) PartitionKey() (localctx IPartitionKeyContext) {
 	localctx = NewPartitionKeyContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 14, CqlParserRULE_partitionKey)
+	p.EnterRule(localctx, 16, CqlParserRULE_partitionKey)
 	var _la int
 
-	p.SetState(99)
+	p.SetState(116)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -1552,14 +1838,14 @@ func (p *CqlParser) PartitionKey() (localctx IPartitionKeyContext) {
 	case CqlParserIDENTIFIER:
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(87)
+			p.SetState(104)
 			p.ColumnName()
 		}
 
 	case CqlParserL_PAREN:
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(88)
+			p.SetState(105)
 			p.Match(CqlParserL_PAREN)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -1567,10 +1853,10 @@ func (p *CqlParser) PartitionKey() (localctx IPartitionKeyContext) {
 			}
 		}
 		{
-			p.SetState(89)
+			p.SetState(106)
 			p.ColumnName()
 		}
-		p.SetState(94)
+		p.SetState(111)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
@@ -1579,7 +1865,7 @@ func (p *CqlParser) PartitionKey() (localctx IPartitionKeyContext) {
 
 		for _la == CqlParserCOMMA {
 			{
-				p.SetState(90)
+				p.SetState(107)
 				p.Match(CqlParserCOMMA)
 				if p.HasError() {
 					// Recognition error - abort rule
@@ -1587,11 +1873,11 @@ func (p *CqlParser) PartitionKey() (localctx IPartitionKeyContext) {
 				}
 			}
 			{
-				p.SetState(91)
+				p.SetState(108)
 				p.ColumnName()
 			}
 
-			p.SetState(96)
+			p.SetState(113)
 			p.GetErrorHandler().Sync(p)
 			if p.HasError() {
 				goto errorExit
@@ -1599,7 +1885,7 @@ func (p *CqlParser) PartitionKey() (localctx IPartitionKeyContext) {
 			_la = p.GetTokenStream().LA(1)
 		}
 		{
-			p.SetState(97)
+			p.SetState(114)
 			p.Match(CqlParserR_PAREN)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -1745,15 +2031,15 @@ func (s *ClusteringColumnsContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *CqlParser) ClusteringColumns() (localctx IClusteringColumnsContext) {
 	localctx = NewClusteringColumnsContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 16, CqlParserRULE_clusteringColumns)
+	p.EnterRule(localctx, 18, CqlParserRULE_clusteringColumns)
 	var _la int
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(101)
+		p.SetState(118)
 		p.ColumnName()
 	}
-	p.SetState(106)
+	p.SetState(123)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -1762,7 +2048,7 @@ func (p *CqlParser) ClusteringColumns() (localctx IClusteringColumnsContext) {
 
 	for _la == CqlParserCOMMA {
 		{
-			p.SetState(102)
+			p.SetState(119)
 			p.Match(CqlParserCOMMA)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -1770,11 +2056,11 @@ func (p *CqlParser) ClusteringColumns() (localctx IClusteringColumnsContext) {
 			}
 		}
 		{
-			p.SetState(103)
+			p.SetState(120)
 			p.ColumnName()
 		}
 
-		p.SetState(108)
+		p.SetState(125)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
@@ -1867,10 +2153,10 @@ func (s *ColumnNameContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *CqlParser) ColumnName() (localctx IColumnNameContext) {
 	localctx = NewColumnNameContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 18, CqlParserRULE_columnName)
+	p.EnterRule(localctx, 20, CqlParserRULE_columnName)
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(109)
+		p.SetState(126)
 		p.Match(CqlParserIDENTIFIER)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -1985,18 +2271,18 @@ func (s *TableNameContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *CqlParser) TableName() (localctx ITableNameContext) {
 	localctx = NewTableNameContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 20, CqlParserRULE_tableName)
+	p.EnterRule(localctx, 22, CqlParserRULE_tableName)
 	p.EnterOuterAlt(localctx, 1)
-	p.SetState(114)
+	p.SetState(131)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 10, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 13, p.GetParserRuleContext()) == 1 {
 		{
-			p.SetState(111)
+			p.SetState(128)
 			p.KeyspaceName()
 		}
 		{
-			p.SetState(112)
+			p.SetState(129)
 			p.Match(CqlParserDOT)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2008,7 +2294,7 @@ func (p *CqlParser) TableName() (localctx ITableNameContext) {
 		goto errorExit
 	}
 	{
-		p.SetState(116)
+		p.SetState(133)
 		p.Match(CqlParserIDENTIFIER)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -2113,10 +2399,10 @@ func (s *KeyspaceNameContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *CqlParser) KeyspaceName() (localctx IKeyspaceNameContext) {
 	localctx = NewKeyspaceNameContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 22, CqlParserRULE_keyspaceName)
+	p.EnterRule(localctx, 24, CqlParserRULE_keyspaceName)
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(118)
+		p.SetState(135)
 		p.GeneralIdentifier()
 	}
 
@@ -2210,12 +2496,12 @@ func (s *GeneralIdentifierContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *CqlParser) GeneralIdentifier() (localctx IGeneralIdentifierContext) {
 	localctx = NewGeneralIdentifierContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 24, CqlParserRULE_generalIdentifier)
+	p.EnterRule(localctx, 26, CqlParserRULE_generalIdentifier)
 	var _la int
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(120)
+		p.SetState(137)
 		_la = p.GetTokenStream().LA(1)
 
 		if !(_la == CqlParserIDENTIFIER || _la == CqlParserIDENTIFIER_WITH_HYPHEN) {
@@ -2340,8 +2626,8 @@ func (s *CqlTypeContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *CqlParser) CqlType() (localctx ICqlTypeContext) {
 	localctx = NewCqlTypeContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 26, CqlParserRULE_cqlType)
-	p.SetState(124)
+	p.EnterRule(localctx, 28, CqlParserRULE_cqlType)
+	p.SetState(141)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -2351,14 +2637,14 @@ func (p *CqlParser) CqlType() (localctx ICqlTypeContext) {
 	case CqlParserK_ASCII, CqlParserK_BIGINT, CqlParserK_BLOB, CqlParserK_BOOLEAN, CqlParserK_COUNTER, CqlParserK_DATE, CqlParserK_DECIMAL, CqlParserK_DOUBLE, CqlParserK_FLOAT, CqlParserK_INET, CqlParserK_INT, CqlParserK_SMALLINT, CqlParserK_TEXT, CqlParserK_TIME, CqlParserK_TIMESTAMP, CqlParserK_TIMEUUID, CqlParserK_TINYINT, CqlParserK_UUID, CqlParserK_VARCHAR, CqlParserK_VARINT:
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(122)
+			p.SetState(139)
 			p.CqlNativeType()
 		}
 
 	case CqlParserK_MAP, CqlParserK_SET, CqlParserK_LIST:
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(123)
+			p.SetState(140)
 			p.CqlCollectionType()
 		}
 
@@ -2457,10 +2743,10 @@ func (s *PrimaryKeyKeywordsContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *CqlParser) PrimaryKeyKeywords() (localctx IPrimaryKeyKeywordsContext) {
 	localctx = NewPrimaryKeyKeywordsContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 28, CqlParserRULE_primaryKeyKeywords)
+	p.EnterRule(localctx, 30, CqlParserRULE_primaryKeyKeywords)
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(126)
+		p.SetState(143)
 		p.Match(CqlParserK_PRIMARY)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -2468,7 +2754,7 @@ func (p *CqlParser) PrimaryKeyKeywords() (localctx IPrimaryKeyKeywordsContext) {
 		}
 	}
 	{
-		p.SetState(127)
+		p.SetState(144)
 		p.Match(CqlParserK_KEY)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -2571,10 +2857,10 @@ func (s *IfNotExistContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *CqlParser) IfNotExist() (localctx IIfNotExistContext) {
 	localctx = NewIfNotExistContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 30, CqlParserRULE_ifNotExist)
+	p.EnterRule(localctx, 32, CqlParserRULE_ifNotExist)
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(129)
+		p.SetState(146)
 		p.Match(CqlParserK_IF)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -2582,7 +2868,7 @@ func (p *CqlParser) IfNotExist() (localctx IIfNotExistContext) {
 		}
 	}
 	{
-		p.SetState(130)
+		p.SetState(147)
 		p.Match(CqlParserK_NOT)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -2590,7 +2876,7 @@ func (p *CqlParser) IfNotExist() (localctx IIfNotExistContext) {
 		}
 	}
 	{
-		p.SetState(131)
+		p.SetState(148)
 		p.Match(CqlParserK_EXISTS)
 		if p.HasError() {
 			// Recognition error - abort rule
@@ -2778,15 +3064,15 @@ func (s *CqlNativeTypeContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *CqlParser) CqlNativeType() (localctx ICqlNativeTypeContext) {
 	localctx = NewCqlNativeTypeContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 32, CqlParserRULE_cqlNativeType)
+	p.EnterRule(localctx, 34, CqlParserRULE_cqlNativeType)
 	var _la int
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(133)
+		p.SetState(150)
 		_la = p.GetTokenStream().LA(1)
 
-		if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&536870400) != 0) {
+		if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&1073740800) != 0) {
 			p.GetErrorHandler().RecoverInline(p)
 		} else {
 			p.GetErrorHandler().ReportMatch(p)
@@ -2947,10 +3233,10 @@ func (s *CqlCollectionTypeContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *CqlParser) CqlCollectionType() (localctx ICqlCollectionTypeContext) {
 	localctx = NewCqlCollectionTypeContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 34, CqlParserRULE_cqlCollectionType)
+	p.EnterRule(localctx, 36, CqlParserRULE_cqlCollectionType)
 	var _la int
 
-	p.SetState(147)
+	p.SetState(164)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -2960,7 +3246,7 @@ func (p *CqlParser) CqlCollectionType() (localctx ICqlCollectionTypeContext) {
 	case CqlParserK_MAP:
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(135)
+			p.SetState(152)
 			p.Match(CqlParserK_MAP)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2968,7 +3254,7 @@ func (p *CqlParser) CqlCollectionType() (localctx ICqlCollectionTypeContext) {
 			}
 		}
 		{
-			p.SetState(136)
+			p.SetState(153)
 			p.Match(CqlParserL_ANGLE_BRACKET)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2976,11 +3262,11 @@ func (p *CqlParser) CqlCollectionType() (localctx ICqlCollectionTypeContext) {
 			}
 		}
 		{
-			p.SetState(137)
+			p.SetState(154)
 			p.CqlNativeType()
 		}
 		{
-			p.SetState(138)
+			p.SetState(155)
 			p.Match(CqlParserCOMMA)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2988,11 +3274,11 @@ func (p *CqlParser) CqlCollectionType() (localctx ICqlCollectionTypeContext) {
 			}
 		}
 		{
-			p.SetState(139)
+			p.SetState(156)
 			p.CqlNativeType()
 		}
 		{
-			p.SetState(140)
+			p.SetState(157)
 			p.Match(CqlParserR_ANGLE_BRACKET)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -3003,7 +3289,7 @@ func (p *CqlParser) CqlCollectionType() (localctx ICqlCollectionTypeContext) {
 	case CqlParserK_SET, CqlParserK_LIST:
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(142)
+			p.SetState(159)
 			_la = p.GetTokenStream().LA(1)
 
 			if !(_la == CqlParserK_SET || _la == CqlParserK_LIST) {
@@ -3014,7 +3300,7 @@ func (p *CqlParser) CqlCollectionType() (localctx ICqlCollectionTypeContext) {
 			}
 		}
 		{
-			p.SetState(143)
+			p.SetState(160)
 			p.Match(CqlParserL_ANGLE_BRACKET)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -3022,11 +3308,11 @@ func (p *CqlParser) CqlCollectionType() (localctx ICqlCollectionTypeContext) {
 			}
 		}
 		{
-			p.SetState(144)
+			p.SetState(161)
 			p.CqlNativeType()
 		}
 		{
-			p.SetState(145)
+			p.SetState(162)
 			p.Match(CqlParserR_ANGLE_BRACKET)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -3167,32 +3453,32 @@ func (s *WihtTableOptionsContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *CqlParser) WihtTableOptions() (localctx IWihtTableOptionsContext) {
 	localctx = NewWihtTableOptionsContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 36, CqlParserRULE_wihtTableOptions)
+	p.EnterRule(localctx, 38, CqlParserRULE_wihtTableOptions)
 	var _la int
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(149)
+		p.SetState(166)
 		p.Match(CqlParserK_WITH)
 		if p.HasError() {
 			// Recognition error - abort rule
 			goto errorExit
 		}
 	}
-	p.SetState(153)
+	p.SetState(170)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
 	_la = p.GetTokenStream().LA(1)
 
-	for (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&39578123632638) != 0 {
+	for (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&79156247265278) != 0 {
 		{
-			p.SetState(150)
+			p.SetState(167)
 			p.NonSemicolonToken()
 		}
 
-		p.SetState(155)
+		p.SetState(172)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
@@ -3229,6 +3515,7 @@ type INonSemicolonTokenContext interface {
 	K_PRIMARY() antlr.TerminalNode
 	K_KEY() antlr.TerminalNode
 	K_WITH() antlr.TerminalNode
+	K_KEYSPACE() antlr.TerminalNode
 	K_ASCII() antlr.TerminalNode
 	K_BIGINT() antlr.TerminalNode
 	K_BLOB() antlr.TerminalNode
@@ -3329,6 +3616,10 @@ func (s *NonSemicolonTokenContext) K_KEY() antlr.TerminalNode {
 
 func (s *NonSemicolonTokenContext) K_WITH() antlr.TerminalNode {
 	return s.GetToken(CqlParserK_WITH, 0)
+}
+
+func (s *NonSemicolonTokenContext) K_KEYSPACE() antlr.TerminalNode {
+	return s.GetToken(CqlParserK_KEYSPACE, 0)
 }
 
 func (s *NonSemicolonTokenContext) K_ASCII() antlr.TerminalNode {
@@ -3485,15 +3776,15 @@ func (s *NonSemicolonTokenContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *CqlParser) NonSemicolonToken() (localctx INonSemicolonTokenContext) {
 	localctx = NewNonSemicolonTokenContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 38, CqlParserRULE_nonSemicolonToken)
+	p.EnterRule(localctx, 40, CqlParserRULE_nonSemicolonToken)
 	var _la int
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(156)
+		p.SetState(173)
 		_la = p.GetTokenStream().LA(1)
 
-		if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&39578123632638) != 0) {
+		if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&79156247265278) != 0) {
 			p.GetErrorHandler().RecoverInline(p)
 		} else {
 			p.GetErrorHandler().ReportMatch(p)
