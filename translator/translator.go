@@ -179,14 +179,35 @@ func isInTableLevelPrimaryKey(tableLevelPrimaryKey []string, column string) bool
 	return false
 }
 
-func ToSpannerCreateTableStmt(cqlStmt, databaseName string) (string, error) {
+// ToSpannerStmt attempts to translate a CQL statement into a equivalent Spanner statement.
+//
+// Input:
+//
+//	cqlStmt      string: The CQL statement.
+//	databaseName string: The expected database (keyspace) name for validation.
+//
+// Output:
+//
+//	spannerStmt string: The translated SQL (empty if ignored).
+//	ignored	 	bool:   True if the statement was not a CREATE TABLE.
+//	err     	error:  Error during translation or keyspace validation (nil if ignored due to statement type).
+func ToSpannerStmt(cqlStmt, databaseName string) (string, bool, error) {
 	root, err := getCqlParseTreeRoot(cqlStmt)
 	if err != nil {
-		return "", err // Return error if parsing fails
+		return "", false, err // Return error if parsing fails
 	}
 
+	if root.CqlStatement().CreateTable() != nil {
+		stmt, err := toSpannerCreateTableStmt(root.CqlStatement().CreateTable(), databaseName)
+		return stmt, false, err
+	}
+
+	// The stmt is ignored if it is not a CREATE TABLE stmt.
+	return "", true, nil
+}
+
+func toSpannerCreateTableStmt(createTable cql.ICreateTableContext, databaseName string) (string, error) {
 	// Verify the Cassandra keyspace name is the Spanner database name.
-	createTable := root.CqlStatement().CreateTable()
 	if createTable.TableName().KeyspaceName() != nil {
 		keyspace := createTable.TableName().KeyspaceName().GetText()
 		if !strings.EqualFold(keyspace, databaseName) {
@@ -229,7 +250,7 @@ func ToSpannerCreateTableStmt(cqlStmt, databaseName string) (string, error) {
 		isNotNullRequired := false
 		cqlType := columnDefinition.CqlType()
 		if isInTableLevelPrimaryKey(tableLevelPrimaryKey, columnName) || isColumnLevelPk {
-			if err = validatePrimaryKeyType(cqlType, columnName); err != nil {
+			if err := validatePrimaryKeyType(cqlType, columnName); err != nil {
 				return "", err
 			}
 			isNotNullRequired = true

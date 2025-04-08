@@ -247,13 +247,17 @@ func main() {
 	log.Printf("----------------------------------------------")
 	for _, stmt := range stmts {
 		log.Printf("[Cassandra statement]\n%s\n", stmt)
-		spannerCreateTableStmt, err := translator.ToSpannerCreateTableStmt(stmt, flags.databaseID)
+		spannerStmt, ignored, err := translator.ToSpannerStmt(stmt, flags.databaseID)
 		if err != nil {
 			log.Fatalf("%v\n", err)
 		}
-		log.Printf("[Converted Spanner statement]\n%s\n", spannerCreateTableStmt)
+		if ignored {
+			log.Printf("Skipping non-CREATE TABLE statement.\n")
+		} else {
+			log.Printf("[Converted Spanner statement]\n%s\n", spannerStmt)
+		}
 		log.Printf("----------------------------------------------")
-		spannerCreateTableStmts = append(spannerCreateTableStmts, spannerCreateTableStmt)
+		spannerCreateTableStmts = append(spannerCreateTableStmts, spannerStmt)
 	}
 
 	outputFile := "schema.txt"

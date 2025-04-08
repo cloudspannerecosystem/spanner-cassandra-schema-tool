@@ -53,6 +53,12 @@ func (s *BaseCqlParserListener) EnterCreateTable(ctx *CreateTableContext) {}
 // ExitCreateTable is called when production createTable is exited.
 func (s *BaseCqlParserListener) ExitCreateTable(ctx *CreateTableContext) {}
 
+// EnterCreateKeyspace is called when production createKeyspace is entered.
+func (s *BaseCqlParserListener) EnterCreateKeyspace(ctx *CreateKeyspaceContext) {}
+
+// ExitCreateKeyspace is called when production createKeyspace is exited.
+func (s *BaseCqlParserListener) ExitCreateKeyspace(ctx *CreateKeyspaceContext) {}
+
 // EnterColumnDefinitionList is called when production columnDefinitionList is entered.
 func (s *BaseCqlParserListener) EnterColumnDefinitionList(ctx *ColumnDefinitionListContext) {}
 
