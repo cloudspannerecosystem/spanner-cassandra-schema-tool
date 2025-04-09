@@ -12,6 +12,8 @@ cloud.google.com/go/longrunning v0.6.6 h1:XJNDo5MUfMM05xK3ewpbSdmt7R2Zw+aQEMbdQR
 cloud.google.com/go/longrunning v0.6.6/go.mod h1:hyeGJUrPHcx0u2Uu1UFSoYZLn4lkMrccJig0t4FI7yw=
 cloud.google.com/go/spanner v1.78.0 h1:lO0W6rnGRH1ILpFgoVr0tO+ffnE0Xbw+vNtU6VCDXQo=
 cloud.google.com/go/spanner v1.78.0/go.mod h1:224ub0ngSaiy7SJI7QZ1pu9zoVPt6CgfwDGBNhUUuzU=
+cloud.google.com/go/spanner v1.79.0 h1:HSg+P01K6I1ZFxvLGYToLdZkp+noM7P777Hd/ZHFvdk=
+cloud.google.com/go/spanner v1.79.0/go.mod h1:224ub0ngSaiy7SJI7QZ1pu9zoVPt6CgfwDGBNhUUuzU=
 github.com/antlr4-go/antlr/v4 v4.13.1 h1:SqQKkuVZ+zWkMMNkjy5FZe5mr5WURWnlpmOuzYWrPrQ=
 github.com/antlr4-go/antlr/v4 v4.13.1/go.mod h1:GKmUxMtwp6ZgGwZSva4eWPC5mS6vUAmOABFgjdkM7Nw=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
