@@ -5,7 +5,7 @@ go 1.23.0
 require (
 	cloud.google.com/go/spanner v1.78.0
 	github.com/antlr4-go/antlr/v4 v4.13.1
-	github.com/stretchr/testify v1.10.0
+	github.com/stretchr/testify v1.11.1
 )
 
 require (
